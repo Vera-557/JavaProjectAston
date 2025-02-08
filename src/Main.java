@@ -18,7 +18,7 @@ public class Main {
             System.out.println("6. Выйти");
             System.out.println("Выберете опцию");
 
-            int choice = scan.nextInt();
+            int choice = validatedInt(scan);
 
             switch (choice) {
                 case 1:
@@ -45,4 +45,13 @@ public class Main {
         }
         scan.close();
     }
+
+    private static int validatedInt(Scanner scan) {
+        while (!scan.hasNextInt()) {
+            System.out.println("Ошибка: введите целое число.");
+            scan.next();
+        }
+        return  scan.nextInt();
+    }
 }
+
