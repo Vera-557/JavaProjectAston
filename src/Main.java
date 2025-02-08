@@ -35,7 +35,7 @@ public class Main {
             System.out.println(bus.toString());
         }
 
-        String sortStr = Bus.SortKeys.GOSNUMBER;
+        String sortStr = "gosnumber";
         System.out.printf("Сортируем массив по полю %S, выводим на экран\n", sortStr);
         busArray.sort(sortStr);
         for (Bus bus : busArr) {
