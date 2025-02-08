@@ -10,10 +10,18 @@ public class Bus implements InterfaceCompare<Bus> {
 
     //TODO Сделать ключи через enum
 
-    public Bus(String gosNumber, String model, int odometer) {
+    private Bus(String gosNumber, String model, int odometer) {
         this.gosNumber = gosNumber;
         this.model = model;
         this.odometer = odometer;
+    }
+
+    public static Bus create(String gosNumber, String model, int odometer) throws Exception {
+//        проверка gosNumber на корректность, если да, идем дальше, если нет, кидаем исключенияч
+//        проверка model на корректность, если да, идем дальше, если нет, кидаем исключенияч
+//        проверка odometer на корректность, если да, идем дальше, если нет, кидаем исключенияч
+        if (odometer < 0) throw new Exception("ОШИБКА! ВВЕДЕН ОТРИЦАТЕЛЬНЫЙ ОДОМЕТР");
+        return new Bus(gosNumber, model, odometer);
     }
 
     public Bus(String gosNumber, String model) {

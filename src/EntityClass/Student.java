@@ -6,10 +6,14 @@ public class Student implements InterfaceCompare<Student> {
     private double averageScore;
     private int studentBookNumber;
 
-    public Student(String groupNumber, int studentBookNumber, double averageScore) {
+    private Student(String groupNumber, int studentBookNumber, double averageScore) {
         this.groupNumber = groupNumber;
         this.averageScore = averageScore;
         this.studentBookNumber = studentBookNumber;
+    }
+
+    public static Student create(String groupNumber, int studentBookNumber, double averageScore) {
+        return new Student(groupNumber, studentBookNumber, averageScore);
     }
 
     public String getGroupNumber() {
