@@ -21,11 +21,26 @@ public class Main {
             int choice = scan.nextInt();
 
             switch (choice) {
+                case 1:
+                    fillDataHand(scan, data);
+                    break;
+                case 2:
+                    fillDataAuto(data);
+                    break;
+                case 3:
+                    sortData(scan, data);
+                    break;
+                case 4:
+                    searchData(scan, data);
+                    break;
+                case 5:
+                    printData(data);
+                    break;
                 case 6:
                     running = false;
                     break;
                 default:
-                   System.out.println("Неверный выбор. Попробуйте снова.");
+                    System.out.println("Неверный выбор. Попробуйте снова.");
             }
         }
         scan.close();
