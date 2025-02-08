@@ -1,3 +1,6 @@
+package EntityClass;
+import comparators.InterfaceCompare;
+
 public class Student implements InterfaceCompare<Student> {
     private String groupNumber;
     private double averageScore;
@@ -34,8 +37,8 @@ public class Student implements InterfaceCompare<Student> {
     }
 
     @Override
-    public int compareTo(Student o2, String sortBy) {
-        switch (sortBy) {
+    public int compareTo(Student o2, String compareBy) {
+        switch (compareBy) {
             case "groupNumber":
                 return this.getGroupNumber().compareToIgnoreCase(o2.getGroupNumber());
             case "studentBookNumber":
@@ -43,7 +46,7 @@ public class Student implements InterfaceCompare<Student> {
             case "averageScore":
                 return Double.compare(this.getAverageScore(), o2.getAverageScore());
             default:
-                throw new IllegalArgumentException("Неверное поле сортировки: " + sortBy);
+                throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
 }

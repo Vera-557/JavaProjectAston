@@ -1,5 +1,9 @@
-    public class User implements InterfaceCompare<User> {
-//    public class User implements Comparable<User> {
+package EntityClass;
+
+import comparators.InterfaceCompare;
+
+public class User implements InterfaceCompare<User> {
+//    public class EntityClass.User implements Comparable<EntityClass.User> {
     private String name;
     private String email;
     private String password;
@@ -30,8 +34,8 @@
 
 
     @Override
-    public int compareTo(User o2, String sortBy) {
-        switch (sortBy) {
+    public int compareTo(User o2, String compareBy) {
+        switch (compareBy) {
             case "name":
                 return this.getName().compareToIgnoreCase(o2.getName());
             case "email":
@@ -39,7 +43,7 @@
             case "password":
                 return this.getPassword().compareTo(o2.getPassword());
             default:
-                throw new IllegalArgumentException("Неверное поле сортировки: " + sortBy);
+                throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
 

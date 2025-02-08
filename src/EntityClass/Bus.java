@@ -1,3 +1,7 @@
+package EntityClass;
+
+import comparators.InterfaceCompare;
+
 public class Bus implements InterfaceCompare<Bus> {
     private String gosNumber;
     private String model;
@@ -41,7 +45,7 @@ public class Bus implements InterfaceCompare<Bus> {
 
     @Override
     public String toString() {
-        return "Bus:" +
+        return "EntityClass.Bus:" +
                 " " + gosNumber +
                 ", '" + model +
                 "', " + odometer
@@ -50,8 +54,8 @@ public class Bus implements InterfaceCompare<Bus> {
 
 
     @Override
-    public int compareTo(Bus o2, String sortBy) {
-        switch (sortBy) {
+    public int compareTo(Bus o2, String compareBy) {
+        switch (compareBy) {
             case "gosNumber":
                 return this.getGosNumber().compareToIgnoreCase(o2.getGosNumber());
             case "model":
@@ -59,7 +63,7 @@ public class Bus implements InterfaceCompare<Bus> {
             case "odometer":
                 return Integer.compare(this.getOdometer(), o2.getOdometer());
             default:
-                throw new IllegalArgumentException("Неверное поле сортировки: " + sortBy);
+                throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
 

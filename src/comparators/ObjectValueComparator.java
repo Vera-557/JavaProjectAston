@@ -1,3 +1,7 @@
+package comparators;
+
+import comparators.PureComparator;
+
 import java.util.Comparator;
 
 public class ObjectValueComparator<T, R extends Comparable<R>> implements Comparator<T> {
@@ -29,10 +33,6 @@ public class ObjectValueComparator<T, R extends Comparable<R>> implements Compar
             String str2 = (String) valueExtractor.extractValue(o2);
             return PureComparator.compareString(str1,str2);
         }
-
         throw new ClassCastException("Несравниваемые значения");
-//    return 0;
-
-
     }
 }

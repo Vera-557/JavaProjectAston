@@ -1,3 +1,5 @@
+package comparators;
+
 public class PureComparator {
     public static int compareInteger(Integer o1, Integer o2) {
         if (o1 == o2) return 0;

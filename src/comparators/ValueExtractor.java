@@ -1,3 +1,4 @@
+package comparators;
 
 public interface ValueExtractor<T, R> {
 

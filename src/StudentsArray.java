@@ -1,10 +1,11 @@
 import EntityClass.Bus;
+import EntityClass.Student;
 import comparators.Sortable2;
 
-public class BusArray implements Sortable2<Bus> {
-    Bus[] array;
+public class StudentsArray implements Sortable2<Student> {
+    Student[] array;
 
-    public BusArray(Bus[] array) {
+    public StudentsArray(Student[] array) {
         this.array = array;
     }
 
@@ -13,11 +14,11 @@ public class BusArray implements Sortable2<Bus> {
         for (int i = 0; i < array.length; i ++) {
             int minIndex = i;
             for (int j = i + 1; j < array.length; j++){
-                if (array[j].compareTo(array[minIndex], "odometer") < 0) {
+                if (array[j].compareTo(array[minIndex], sortBy) < 0) {
                     minIndex = j;
                 }
             }
-            Bus temp = array[minIndex];
+            Student temp = array[minIndex];
             array[minIndex] = array[i];
             array[i] = temp;
         }

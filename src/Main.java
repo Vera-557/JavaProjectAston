@@ -1,3 +1,7 @@
+import EntityClass.Bus;
+import comparators.ObjectValueComparator;
+import comparators.Sortable2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +40,7 @@ public class Main {
             System.out.println(bus.toString());
         }
 
-//        Sortable<Bus> srt = new Bus("1748 AA-3", "Ford", 345098);
+//        comparators.Sortable<EntityClass.Bus> srt = new EntityClass.Bus("1748 AA-3", "Ford", 345098);
 
         Sortable2<Bus> busArray = new BusArray(busArr);
 
