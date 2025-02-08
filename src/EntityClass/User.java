@@ -8,10 +8,14 @@ public class User implements InterfaceCompare<User> {
     private String email;
     private String password;
 
-    public User(String name, String email, String password) {
+    private User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public static User create(String name, String email, String password) {
+        return new User(name, email, password);
     }
 
     public String getName() {
