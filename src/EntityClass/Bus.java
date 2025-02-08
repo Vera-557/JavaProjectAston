@@ -1,11 +1,14 @@
 package EntityClass;
 
 import comparators.InterfaceCompare;
+import comparators.Sortable;
 
 public class Bus implements InterfaceCompare<Bus> {
     private String gosNumber;
     private String model;
     private int odometer;
+
+    //TODO Сделать ключи через enum
 
     public Bus(String gosNumber, String model, int odometer) {
         this.gosNumber = gosNumber;

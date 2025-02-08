@@ -37,6 +37,15 @@ public class Student implements InterfaceCompare<Student> {
     }
 
     @Override
+    public String toString() {
+        return "EntityClass.Student:" +
+                " " + groupNumber +
+                ", '" + studentBookNumber +
+                "', " + averageScore
+                ;
+    }
+
+    @Override
     public int compareTo(Student o2, String compareBy) {
         switch (compareBy) {
             case "groupNumber":

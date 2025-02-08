@@ -1,6 +1,5 @@
 package comparators;
 
-public interface Sortable <T> {
-    void sort (T [] array, String sortBy);
+public interface Sortable<T> {
+    void sort (String sortBy);
 }
-

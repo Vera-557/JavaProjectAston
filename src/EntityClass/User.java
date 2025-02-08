@@ -8,6 +8,12 @@ public class User implements InterfaceCompare<User> {
     private String email;
     private String password;
 
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
@@ -32,6 +38,14 @@ public class User implements InterfaceCompare<User> {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "EntityClass.User:" +
+                " " + name +
+                ", '" + email +
+                "', " + password
+                ;
+    }
 
     @Override
     public int compareTo(User o2, String compareBy) {
