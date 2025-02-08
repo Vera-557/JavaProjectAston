@@ -1,6 +1,33 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-System.out.println("Hello and welcome!");
+        List<Integer> data = new ArrayList<>();
+        Scanner scan = new Scanner(System.in);
+        boolean running = true;
 
+        while (running) {
+            System.out.println("\nМеню:");
+            System.out.println("1. Заполнить данные в ручную");
+            System.out.println("2. Заполнить данные автоматически");
+            System.out.println("3. Отсортировать данные");
+            System.out.println("4. Найти элемент");
+            System.out.println("5. Вывести данные");
+            System.out.println("6. Выйти");
+            System.out.println("Выберете опцию");
+
+            int choice = scan.nextInt();
+
+            switch (choice) {
+                case 6:
+                    running = false;
+                    break;
+                default:
+                   System.out.println("Неверный выбор. Попробуйте снова.");
+            }
+        }
+        scan.close();
     }
 }
