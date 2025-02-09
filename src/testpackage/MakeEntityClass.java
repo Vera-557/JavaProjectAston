@@ -13,8 +13,15 @@ public class MakeEntityClass {
         Bus bus2 = Bus.create("1748 AA-2", "Nissan", 115000, false);
         Bus bus3 = Bus.create("5554 AA-2", "GAZ", 15790, false);
         Bus bus4 = Bus.create("1112 AA-1", "Ford", 11500, false);
-        Bus bus5 = Bus.create("5555 AA-7", "Volvo", 0, false);
-        return new Bus[]{bus1, bus2, bus3, bus4, bus5};
+        Bus bus5 = Bus.create("5555 AA-7", "Volvo", 10, false);
+        Bus bus6 = Bus.create("5555 AA-7", "Volvo", 1, false);
+        Bus bus7 = Bus.create("5555 AA-7", "Volvo", 3, false);
+        Bus bus8 = Bus.create("5555 AA-7", "Volvo", 5, false);
+        Bus bus9 = Bus.create("5555 AA-7", "Volvo", 7, false);
+        Bus bus10 = Bus.create("5555 AA-7", "Volvo", 9, false);
+
+
+        return new Bus[]{bus1, bus2, bus3, bus4, bus5, bus6, bus7, bus8, bus9, bus10};
     }
 
     public static User[] getUserArray() {

@@ -6,6 +6,15 @@ public class Student implements InterfaceCompare<Student> {
     private double averageScore;
     private int studentBookNumber;
 
+    /**
+     * Допустимые ключи сортировки
+     */
+    public enum KeySort {
+        groupNumber,
+        averageScore,
+        studentBookNumber
+    }
+
     private Student(String groupNumber, int studentBookNumber, double averageScore) {
         this.groupNumber = groupNumber;
         this.averageScore = averageScore;
