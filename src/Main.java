@@ -3,7 +3,6 @@ import EntityClass.EntityList;
 import comparators.ObjectValueComparator;
 import comparators.Sortable;
 import testpackage.MakeEntityClass;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +20,7 @@ public class Main {
 
     Bus[] busArr = MakeEntityClass.getBusArray();
 
-    System.out.println("Вывод перовначального листа");
+    System.out.println("Вывод первоначального листа");
     for (Bus bus : busList) {
             System.out.println(bus.toString());
         }
@@ -40,12 +39,20 @@ public class Main {
             System.out.println(bus.toString());
         }
 
-        String sortStr = "gosnumber";
-        System.out.printf("Сортируем массив по полю %S, выводим на экран\n", sortStr);
+        String sortStr = Bus.KeySort.gosNumber.toString();
+        System.out.printf("Сортируем массив по полю %s, выводим на экран\n", sortStr);
         busArray.sort(sortStr);
         for (Bus bus : busArr) {
             System.out.println(bus.toString());
         }
+
+        sortStr = Bus.KeySort.odometer.toString();
+        System.out.printf("Сортируем массив по полю %s, выводим на экран\n", sortStr);
+        busArray.sortEven(sortStr);
+        for (Bus bus : busArr) {
+            System.out.println(bus.toString());
+        }
+
     }
 
 }

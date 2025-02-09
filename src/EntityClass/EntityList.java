@@ -10,13 +10,18 @@ import comparators.Sortable;
 public class EntityList<T extends InterfaceCompare> implements Sortable<T> {
     T[] array;
 
+    /**
+     * принимает в себя массив, содержащий клсс, который может имплементировать InterfaceCompare
+     * @param array
+     */
     public EntityList(T[] array) {
         this.array = array;
     }
 
 
     /**
-     * Прямая сортировка по ключу
+     * Прямая сортировка по ключу.
+     * Автор реализации - Вера.
      * @param sortBy - ключ сортировки
      */
     @Override
@@ -24,7 +29,7 @@ public class EntityList<T extends InterfaceCompare> implements Sortable<T> {
         for (int i = 0; i < array.length; i ++) {
             int minIndex = i;
             for (int j = i + 1; j < array.length; j++){
-                if (array[j].compareTo(array[minIndex], "odometer") < 0) {
+                if (array[j].compareTo(array[minIndex], sortBy) < 0) {
                     minIndex = j;
                 }
             }
@@ -33,4 +38,25 @@ public class EntityList<T extends InterfaceCompare> implements Sortable<T> {
             array[i] = temp;
         }
     }
+
+    /**
+     * Тоже, что sort, только сортируются 0 и четные индексы массива
+     * @param sortBy
+     */
+    @Override
+    public void sortEven(String sortBy) {
+        for (int i = 0; i < array.length; i = i + 2) {
+            int minIndex = i;
+            for (int j = i + 2; j < array.length; j = j + 2){
+                if (array[j].compareTo(array[minIndex], sortBy) < 0) {
+                    minIndex = j;
+                }
+            }
+            T temp = array[minIndex];
+            array[minIndex] = array[i];
+            array[i] = temp;
+        }
+    }
+
+
 }

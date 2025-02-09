@@ -8,7 +8,14 @@ public class Bus implements InterfaceCompare<Bus> {
     private String model;
     private int odometer;
 
-    //TODO Сделать ключи через enum
+    /**
+     * Допустимые ключи сортировки
+     */
+    public enum KeySort {
+        gosNumber,
+        model,
+        odometer
+    }
 
     private Bus(String gosNumber, String model, int odometer) {
         this.gosNumber = gosNumber;
@@ -43,7 +50,7 @@ public class Bus implements InterfaceCompare<Bus> {
             return new Bus(gosNumber, model, odometer);
     }
 
-    
+
     /**
      * Возвращает экземпляр класса С ПРОВЕРКОЙ данных на валидность (если true)
      * @param gosNumber

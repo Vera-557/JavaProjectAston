@@ -8,6 +8,15 @@ public class User implements InterfaceCompare<User> {
     private String email;
     private String password;
 
+    /**
+     * Допустимые ключи сортировки
+     */
+    public enum KeySort {
+        name,
+        email,
+        password
+    }
+
     private User(String name, String email, String password) {
         this.name = name;
         this.email = email;
