@@ -10,6 +10,10 @@ import comparators.Sortable;
 public class EntityList<T extends InterfaceCompare> implements Sortable<T> {
     T[] array;
 
+    /**
+     * принимает в себя массив, содержащий клсс, который может имплементировать InterfaceCompare
+     * @param array
+     */
     public EntityList(T[] array) {
         this.array = array;
     }
