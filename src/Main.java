@@ -1,9 +1,7 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main() {
         List<Integer> data = new ArrayList<>();
         Scanner scan = new Scanner(System.in);
         boolean running = true;
@@ -51,7 +49,64 @@ public class Main {
             System.out.println("Ошибка: введите целое число.");
             scan.next();
         }
-        return  scan.nextInt();
+        return scan.nextInt();
+    }
+
+    private static void fillDataHand(Scanner scan, List<Integer> data){
+        System.out.println("Введите количество элементов: ");
+        int count = Main.validatedInt(scan);
+
+        data.clear();
+        for (int i = 0 ; i < count; i++) {
+            System.out.println("Введите элемент " + (i + 1) + ": ");
+            data.add(Main.validatedInt(scan));
+        }
+    }
+
+    private static void fillDataAuto(List<Integer> data) {
+        data.clear();
+        for (int i = 0; i < 10; i++) {
+            data.add((int) (Math.random() * 100));
+        }
+        System.out.println("Данные заполнены автоматически.");
+    }
+
+    private static void sortData(Scanner scan, List<Integer> data) {
+        System.out.println("Выберите метод сортировки:");
+        System.out.println("1. По возпастанию");
+        System.out.println("2. По убыванию");
+        int choice = validatedInt(scan);
+
+        if (choice == 1) {
+            Collections.sort(data);
+            System.out.println("Данные отсортированы по возрастанию.");
+        } else if (choice == 2) {
+            data.sort(Comparator.reverseOrder());
+            System.out.println("Данные отсортированы по убыванию.");
+        } else {
+            System.out.println("Неверный выбор.");
+        }
+    }
+//бинарный поиск
+    private static void searchData(Scanner scan, List<Integer> data) {
+        System.out.println("Введите элемент для поиска: ");
+        int element = validatedInt(scan);
+
+        int index = Collections.binarySearch(data, element);
+        if (index >= 0) {
+            System.out.println("Элемент найден на позиции: " + index);
+        } else {
+            System.out.println("Элемент не найден");
+        }
+    }
+    private static void printData(List<Integer> data){
+        if (data.isEmpty()) {
+            System.out.println("Данные отсутствуют.");
+        } else {
+            System.out.println("Данные: " + data);
+        }
     }
 }
+
+
 
