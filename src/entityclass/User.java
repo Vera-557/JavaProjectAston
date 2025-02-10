@@ -1,4 +1,4 @@
-package EntityClass;
+package entityclass;
 
 import comparators.InterfaceCompare;
 

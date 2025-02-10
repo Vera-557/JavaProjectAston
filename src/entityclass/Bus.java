@@ -1,7 +1,6 @@
-package EntityClass;
+package entityclass;
 
 import comparators.InterfaceCompare;
-import comparators.Sortable;
 
 
 /**

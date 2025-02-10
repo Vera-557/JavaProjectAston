@@ -5,7 +5,7 @@ package datafileoutput;
 коллекций/найденных значений в файл в режиме добавления данных
  */
 
-import EntityClass.Bus;
+import entityclass.Bus;
 import testpackage.MakeEntityClass;
 
 import java.io.FileWriter;
