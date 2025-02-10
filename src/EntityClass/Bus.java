@@ -1,5 +1,6 @@
 package EntityClass;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import comparators.InterfaceCompare;
 import comparators.Sortable;
 
@@ -17,7 +18,7 @@ public class Bus implements InterfaceCompare<Bus> {
         odometer
     }
 
-    private Bus(String gosNumber, String model, int odometer) {
+    private Bus(@JsonProperty("gosNumber") String gosNumber, @JsonProperty("model") String model, @JsonProperty("odometer") int odometer) {
         this.gosNumber = gosNumber;
         this.model = model;
         this.odometer = odometer;
@@ -41,18 +42,20 @@ public class Bus implements InterfaceCompare<Bus> {
 
     /**
      * Возвращает экземпляр класса БЕЗ ПРОВЕРКИ данных на валидность
+     *
      * @param gosNumber
      * @param model
      * @param odometer
      * @return
      */
     public static Bus create(String gosNumber, String model, int odometer) {
-            return new Bus(gosNumber, model, odometer);
+        return new Bus(gosNumber, model, odometer);
     }
 
 
     /**
      * Возвращает экземпляр класса С ПРОВЕРКОЙ данных на валидность (если true)
+     *
      * @param gosNumber
      * @param model
      * @param odometer
@@ -62,9 +65,12 @@ public class Bus implements InterfaceCompare<Bus> {
      */
     public static Bus create(String gosNumber, String model, int odometer, boolean needValidate) throws Exception {
         if (needValidate) {
-            if (!gosNumberValidate(gosNumber)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера автомобиля. Введено: " + gosNumber);
-            if (!modelValidate(model)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод модели. Разрешаются только цифры и буквы Введено: " + gosNumber);
-            if (!odometerValidate(odometer)) throw new IncorrectDataException("ОШИБКА! Значение одометра не может быть отрицательным. Введено: " + odometer);
+            if (!gosNumberValidate(gosNumber))
+                throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера автомобиля. Введено: " + gosNumber);
+            if (!modelValidate(model))
+                throw new IncorrectDataException("ОШИБКА! Некорректный ввод модели. Разрешаются только цифры и буквы Введено: " + gosNumber);
+            if (!odometerValidate(odometer))
+                throw new IncorrectDataException("ОШИБКА! Значение одометра не может быть отрицательным. Введено: " + odometer);
             return new Bus(gosNumber, model, odometer);
         } else {
             return new Bus(gosNumber, model, odometer);
@@ -124,8 +130,6 @@ public class Bus implements InterfaceCompare<Bus> {
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
-
-
 
 
 }
