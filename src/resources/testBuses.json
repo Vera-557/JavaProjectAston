@@ -1,0 +1,22 @@
+[
+  {
+    "gosNumber": "gn111111",
+    "model": "model1111",
+    "odometer": "11111"
+  },
+  {
+    "gosNumber": "gn22222",
+    "model": "model22222",
+    "odometer": "222222"
+  },
+  {
+    "gosNumber": "gn333333",
+    "model": "model33333",
+    "odometer": "333333"
+  },
+  {
+    "gosNumber": "gn444444",
+    "model": "model444444",
+    "odometer": "444444444"
+  }
+]

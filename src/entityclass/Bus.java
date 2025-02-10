@@ -1,8 +1,7 @@
-package EntityClass;
+package entityclass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import comparators.InterfaceCompare;
-import comparators.Sortable;
 
 public class Bus implements InterfaceCompare<Bus> {
     private String gosNumber;
@@ -68,7 +67,7 @@ public class Bus implements InterfaceCompare<Bus> {
             if (!gosNumberValidate(gosNumber))
                 throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера автомобиля. Введено: " + gosNumber);
             if (!modelValidate(model))
-                throw new IncorrectDataException("ОШИБКА! Некорректный ввод модели. Разрешаются только цифры и буквы Введено: " + gosNumber);
+                throw new IncorrectDataException("ОШИБКА! Некорректный ввод модели. Разрешаются только цифры и буквы Введено: " + model);
             if (!odometerValidate(odometer))
                 throw new IncorrectDataException("ОШИБКА! Значение одометра не может быть отрицательным. Введено: " + odometer);
             return new Bus(gosNumber, model, odometer);

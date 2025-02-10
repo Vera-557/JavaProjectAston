@@ -1,8 +1,16 @@
-import EntityClass.Bus;
-import EntityClass.EntityList;
+import comparators.InterfaceCompare;
+import entityclass.Bus;
+import entityclass.EntityList;
 import comparators.ObjectValueComparator;
 import comparators.Sortable;
+import entityclass.EntityType;
+import loader.DataLoadStrategy;
+import loader.*;
 import testpackage.MakeEntityClass;
+import view.StrategySelector;
+import view.StrategyType;
+import view.TypeSelector;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,18 +18,19 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+
         System.out.println(Bus.gosNumberValidate("4567 AA-8"));
 
         // System.out.println(new Bus("AA-3 8675", "Ford", -1998));
         System.out.println(Bus.create("AA-3 8675", "Ford", 1998, false));
 
-    List<Bus> busList = new ArrayList<>();
-    Collections.addAll(busList, MakeEntityClass.getBusArray());
+        List<Bus> busList = new ArrayList<>();
+        Collections.addAll(busList, MakeEntityClass.getBusArray());
 
-    Bus[] busArr = MakeEntityClass.getBusArray();
+        Bus[] busArr = MakeEntityClass.getBusArray();
 
-    System.out.println("Вывод первоначального листа");
-    for (Bus bus : busList) {
+        System.out.println("Вывод первоначального листа");
+        for (Bus bus : busList) {
             System.out.println(bus.toString());
         }
 
@@ -52,6 +61,25 @@ public class Main {
         for (Bus bus : busArr) {
             System.out.println(bus.toString());
         }
+
+        //старт ввода данных в консоль
+        EntityType entityType = TypeSelector.entityTypeInput();
+        StrategyType strategyType = StrategySelector.strategyTypeInput();
+
+        Class<? extends InterfaceCompare<?>> entityClass = entityType.getTypeClass();
+
+        DataLoadStrategy<?> strategy;
+        switch (strategyType) {
+            case JSON -> strategy = new JsonDataLoader<>(entityClass);
+            case MANUAL -> strategy = new ManualDataLoader<>(entityType);
+            case RANDOM -> strategy = new RandomDataLoader<>(entityType);
+            default -> throw new IllegalStateException("Некорректная стратегия: " + strategyType);
+        }
+
+        DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
+
+        List<?> data = context.processStrategy();
+        data.forEach(System.out::println);
 
     }
 
