@@ -2,8 +2,12 @@ package EntityClass;
 
 import comparators.InterfaceCompare;
 
+/**
+ * Описывает класс User
+ * @author Виктор Карпов
+ */
 public class User implements InterfaceCompare<User> {
-//    public class EntityClass.User implements Comparable<EntityClass.User> {
+
     private String name;
     private String email;
     private String password;
@@ -52,6 +56,7 @@ public class User implements InterfaceCompare<User> {
         //return str.matches("^[a-zA-Z]+$");
     }
 
+    @Deprecated
     /**
      * Возвращает экземпляр класса БЕЗ ПРОВЕРКИ данных на валидность
      * @param name
@@ -69,8 +74,8 @@ public class User implements InterfaceCompare<User> {
      * @param email
      * @param password
      * @param needValidate
-     * @return
-     * @throws Exception
+     * @return экземпляр класса
+     * @throws Exception выбрасывается в случае, если не прошла валидация на создание объекта
      */
     public static User create(String name, String email, String password, boolean needValidate) throws Exception {
         if (needValidate) {

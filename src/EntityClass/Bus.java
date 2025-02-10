@@ -3,6 +3,11 @@ package EntityClass;
 import comparators.InterfaceCompare;
 import comparators.Sortable;
 
+
+/**
+ * Описывает класс Bus
+ * @author Виктор Карпов
+ */
 public class Bus implements InterfaceCompare<Bus> {
     private String gosNumber;
     private String model;
@@ -39,12 +44,13 @@ public class Bus implements InterfaceCompare<Bus> {
         }
     }
 
+    @Deprecated
     /**
      * Возвращает экземпляр класса БЕЗ ПРОВЕРКИ данных на валидность
      * @param gosNumber
      * @param model
      * @param odometer
-     * @return
+     * @return экземпляр класса
      */
     public static Bus create(String gosNumber, String model, int odometer) {
             return new Bus(gosNumber, model, odometer);
@@ -57,8 +63,8 @@ public class Bus implements InterfaceCompare<Bus> {
      * @param model
      * @param odometer
      * @param needValidate
-     * @return
-     * @throws Exception
+     * @return экземпляр класса
+     * @throws Exception выбрасывается в случае, если не прошла валидация на создание объекта
      */
     public static Bus create(String gosNumber, String model, int odometer, boolean needValidate) throws Exception {
         if (needValidate) {
