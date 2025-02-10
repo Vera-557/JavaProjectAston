@@ -7,7 +7,6 @@ package comparators;
  */
 public interface InterfaceCompare<T> {
     /**
-     *
      * @param o2 - сравниваемое значение
      * @param compareBy
      * @return

@@ -1,6 +1,7 @@
 package entityclass;
 
 import comparators.InterfaceCompare;
+import comparators.PureComparator;
 
 /**
  * Описывает класс User
@@ -125,15 +126,29 @@ public class User implements InterfaceCompare<User> {
     public int compareTo(User o2, String compareBy) {
         switch (compareBy) {
             case "name":
-                return this.getName().compareToIgnoreCase(o2.getName());
+                return PureComparator.compareString(this.getName(), o2.getName());
+//                return this.getName().compareToIgnoreCase(o2.getName());
             case "email":
-                return this.getEmail().compareToIgnoreCase(o2.getEmail());
+                return PureComparator.compareString(this.getEmail(), o2.getEmail());
+//                return this.getEmail().compareToIgnoreCase(o2.getEmail());
             case "password":
-                return this.getPassword().compareTo(o2.getPassword());
+                return PureComparator.compareString(this.getPassword(), o2.getPassword());
+//                return this.getPassword().compareTo(o2.getPassword());
             default:
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return email.equals(user.email);
+    }
 
+    @Override
+    public int hashCode() {
+        return email.hashCode();
+    }
 }

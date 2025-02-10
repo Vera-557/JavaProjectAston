@@ -14,7 +14,7 @@ public interface Sortable<T> {
     void sort (String sortBy);
 
     /**
-     * Сортировка в обратном порядке
+     * Сортировка в прямом порядке по четным индексам
      * @param sortBy указывает по какому полю требуется сортировка
      */
     void sortEven (String sortBy);

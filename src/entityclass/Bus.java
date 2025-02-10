@@ -1,6 +1,7 @@
 package entityclass;
 
 import comparators.InterfaceCompare;
+import comparators.PureComparator;
 
 
 /**
@@ -68,7 +69,7 @@ public class Bus implements InterfaceCompare<Bus> {
     public static Bus create(String gosNumber, String model, int odometer, boolean needValidate) throws Exception {
         if (needValidate) {
             if (!gosNumberValidate(gosNumber)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера автомобиля. Введено: " + gosNumber);
-            if (!modelValidate(model)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод модели. Разрешаются только цифры и буквы Введено: " + gosNumber);
+            if (!modelValidate(model)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод модели. Разрешаются только цифры и буквы Введено: " + model);
             if (!odometerValidate(odometer)) throw new IncorrectDataException("ОШИБКА! Значение одометра не может быть отрицательным. Введено: " + odometer);
             return new Bus(gosNumber, model, odometer);
         } else {
@@ -120,17 +121,29 @@ public class Bus implements InterfaceCompare<Bus> {
     public int compareTo(Bus o2, String compareBy) {
         switch (compareBy) {
             case "gosNumber":
-                return this.getGosNumber().compareToIgnoreCase(o2.getGosNumber());
+                return PureComparator.compareString(this.getGosNumber(), o2.getGosNumber());
+//                return this.getGosNumber().compareToIgnoreCase(o2.getGosNumber());
             case "model":
-                return this.getModel().compareToIgnoreCase(o2.getModel());
+                return PureComparator.compareString(this.getModel(), o2.getModel());
+//                return this.getModel().compareToIgnoreCase(o2.getModel());
             case "odometer":
-                return Integer.compare(this.getOdometer(), o2.getOdometer());
+                return PureComparator.compareInteger(this.getOdometer(), o2.getOdometer());
+//                return Integer.compare(this.getOdometer(), o2.getOdometer());
             default:
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bus bus = (Bus) o;
+        return gosNumber.equals(bus.gosNumber);
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return gosNumber.hashCode();
+    }
 }

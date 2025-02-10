@@ -28,6 +28,7 @@ public class WriteDataToFile {
         System.out.println(WriteDataToFile.writeArrayToFile(busArr, "e:\\test.txt", true));
     }
 
+
     /**
      * @param arr Массив для записи. В файл записываются объекты массива, после преобразования в строку ( через toSting)
      * @param path путь для записи файла
@@ -49,4 +50,6 @@ public class WriteDataToFile {
         }
         return true;
     }
+
+
 }
