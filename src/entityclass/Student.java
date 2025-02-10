@@ -1,5 +1,6 @@
 package entityclass;
 import comparators.InterfaceCompare;
+import comparators.PureComparator;
 
 /**
  * Описывает класс Student
@@ -32,8 +33,8 @@ public class Student implements InterfaceCompare<Student> {
     }
 
     /**
-     * Валидация среднего балла. Не должен быть меньше нуля.
-     * @param d
+     * Валидация среднего балла.
+     * @param d не должен быть меньше нуля.
      * @return
      */
     public static boolean averageScoreValidate(double d) {
@@ -45,8 +46,8 @@ public class Student implements InterfaceCompare<Student> {
     }
 
     /**
-     * Валидация номера зачетной книжки. Не должен быть меньше нуля.
-     * @param i
+     * Валидация номера зачетной книжки.
+     * @param i не должен быть меньше нуля
      * @return
      */
     public static boolean studentBookNumberValidate(int i) {
@@ -127,13 +128,30 @@ public class Student implements InterfaceCompare<Student> {
     public int compareTo(Student o2, String compareBy) {
         switch (compareBy) {
             case "groupNumber":
-                return this.getGroupNumber().compareToIgnoreCase(o2.getGroupNumber());
+                return PureComparator.compareString(this.getGroupNumber(), o2.getGroupNumber());
+//                return this.getGroupNumber().compareToIgnoreCase(o2.getGroupNumber());
             case "studentBookNumber":
-                return Integer.compare(this.getStudentBookNumber(), o2.getStudentBookNumber());
+                return PureComparator.compareInteger(this.getStudentBookNumber(), o2.getStudentBookNumber());
+//                return Integer.compare(this.getStudentBookNumber(), o2.getStudentBookNumber());
             case "averageScore":
-                return Double.compare(this.getAverageScore(), o2.getAverageScore());
+                return PureComparator.compareDouble(this.getAverageScore(), o2.getAverageScore());
+//                return Double.compare(this.getAverageScore(), o2.getAverageScore());
             default:
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return studentBookNumber == student.studentBookNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return studentBookNumber;
+    }
+
 }

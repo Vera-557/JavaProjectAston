@@ -24,6 +24,21 @@ public class PureComparator {
     }
 
     /**
+     * Сравнивает два значения типа Double
+     * @param o1 первое сравниваемое значение типа Double
+     * @param o2 второе сравниваемое значение типа Double
+     * @return - значения равны, -1 если o1 > 02 и 1 если o1 < 02
+     */
+    public static int compareDouble(Double o1, Double o2) {
+        if (o1 == o2) return 0;
+        if (o1 > o2) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    /**
      * Сравнивает два значения типа Integer
      * @param str1 первое сравниваемое значение типа String
      * @param str2 второе сравниваемое значение типа String
@@ -43,6 +58,5 @@ public class PureComparator {
         }
         return 0;
     }
-
 
 }
