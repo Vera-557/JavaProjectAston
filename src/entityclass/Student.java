@@ -1,6 +1,10 @@
-package EntityClass;
+package entityclass;
 import comparators.InterfaceCompare;
 
+/**
+ * Описывает класс Student
+ * @author Виктор Карпов
+ */
 public class Student implements InterfaceCompare<Student> {
     private String groupNumber;
     private double averageScore;
@@ -53,12 +57,13 @@ public class Student implements InterfaceCompare<Student> {
         }
     }
 
+    @Deprecated
     /**
      * Возвращает экземпляр класса БЕЗ ПРОВЕРКИ данных на валидность
      * @param groupNumber
      * @param studentBookNumber
      * @param averageScore
-     * @return
+     * @return экземпляр класса
      * @throws Exception
      */
     public static Student create(String groupNumber, int studentBookNumber, double averageScore) throws Exception {
@@ -71,8 +76,8 @@ public class Student implements InterfaceCompare<Student> {
      * @param studentBookNumber
      * @param averageScore
      * @param needValidate
-     * @return
-     * @throws Exception
+     * @return экземпляр класса
+     * @throws Exception выбрасывается в случае, если не прошла валидация на создание объекта
      */
     public static Student create(String groupNumber, int studentBookNumber, double averageScore, boolean needValidate) throws Exception {
         if (needValidate) {

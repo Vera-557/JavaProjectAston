@@ -1,5 +1,5 @@
-import EntityClass.Bus;
-import EntityClass.EntityList;
+import entityclass.Bus;
+import entityclass.EntityList;
 import comparators.ObjectValueComparator;
 import comparators.Sortable;
 import testpackage.MakeEntityClass;

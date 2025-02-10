@@ -1,4 +1,4 @@
-package EntityClass;
+package entityclass;
 
 public class IncorrectDataException extends Exception{
     public IncorrectDataException(String message){
