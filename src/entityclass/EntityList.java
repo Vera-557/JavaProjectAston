@@ -1,4 +1,4 @@
-package entityclass;
+package EntityClass;
 
 import comparators.InterfaceCompare;
 import comparators.Sortable;
