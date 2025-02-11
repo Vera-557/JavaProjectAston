@@ -3,13 +3,13 @@ package entityclass;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import comparators.InterfaceCompare;
 import comparators.PureComparator;
-
+import search.ValueExtractor;
 
 /**
  * Описывает класс Bus
  * @author Виктор Карпов
  */
-public class Bus implements InterfaceCompare<Bus> {
+public class Bus implements InterfaceCompare<Bus>, ValueExtractor<Bus, Object> {
     private String gosNumber;
     private String model;
     private int odometer;
@@ -47,27 +47,10 @@ public class Bus implements InterfaceCompare<Bus> {
     }
 
     @Deprecated
-    /**
-     * Возвращает экземпляр класса БЕЗ ПРОВЕРКИ данных на валидность
-     * @param gosNumber
-     * @param model
-     * @param odometer
-     * @return экземпляр класса
-     */
     public static Bus create(String gosNumber, String model, int odometer) {
-            return new Bus(gosNumber, model, odometer);
+        return new Bus(gosNumber, model, odometer);
     }
 
-
-    /**
-     * Возвращает экземпляр класса С ПРОВЕРКОЙ данных на валидность (если true)
-     * @param gosNumber
-     * @param model
-     * @param odometer
-     * @param needValidate
-     * @return экземпляр класса
-     * @throws Exception выбрасывается в случае, если не прошла валидация на создание объекта
-     */
     public static Bus create(String gosNumber, String model, int odometer, boolean needValidate) throws Exception {
         if (needValidate) {
             if (!gosNumberValidate(gosNumber)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера автомобиля. Введено: " + gosNumber);
@@ -114,23 +97,18 @@ public class Bus implements InterfaceCompare<Bus> {
         return "EntityClass.Bus:" +
                 " " + gosNumber +
                 ", '" + model +
-                "', " + odometer
-                ;
+                "', " + odometer;
     }
-
 
     @Override
     public int compareTo(Bus o2, String compareBy) {
         switch (compareBy) {
             case "gosNumber":
                 return PureComparator.compareString(this.getGosNumber(), o2.getGosNumber());
-//                return this.getGosNumber().compareToIgnoreCase(o2.getGosNumber());
             case "model":
                 return PureComparator.compareString(this.getModel(), o2.getModel());
-//                return this.getModel().compareToIgnoreCase(o2.getModel());
             case "odometer":
                 return PureComparator.compareInteger(this.getOdometer(), o2.getOdometer());
-//                return Integer.compare(this.getOdometer(), o2.getOdometer());
             default:
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
@@ -147,5 +125,20 @@ public class Bus implements InterfaceCompare<Bus> {
     @Override
     public int hashCode() {
         return gosNumber.hashCode();
+    }
+
+
+    @Override
+    public Object extractValue(Bus object, String field) {
+        switch (field) {
+            case "gosNumber":
+                return object.getGosNumber();
+            case "model":
+                return object.getModel();
+            case "odometer":
+                return object.getOdometer();
+            default:
+                throw new IllegalArgumentException("Неизвестное поле: " + field);
+        }
     }
 }

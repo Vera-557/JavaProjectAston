@@ -1,13 +1,15 @@
 package entityclass;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import comparators.InterfaceCompare;
 import comparators.PureComparator;
+import search.ValueExtractor;
 
 /**
  * Описывает класс Student
  * @author Виктор Карпов
  */
-public class Student implements InterfaceCompare<Student> {
+public class Student implements InterfaceCompare<Student>, ValueExtractor<Student, Object> {
     private String groupNumber;
     private double averageScore;
     private int studentBookNumber;
@@ -28,10 +30,9 @@ public class Student implements InterfaceCompare<Student> {
         this.studentBookNumber = studentBookNumber;
     }
 
-    //TODO Требуется ли валидатор?
+    // TODO: Требуется ли валидатор?
     public static boolean groupNumberValidate(String str) {
-        return true;
-        // return str.matches("^\\d{4} [a-zA-Z]{2}-[1-7]$");
+        return true; // Можно добавить более сложную валидацию при необходимости
     }
 
     /**
@@ -61,30 +62,13 @@ public class Student implements InterfaceCompare<Student> {
     }
 
     @Deprecated
-    /**
-     * Возвращает экземпляр класса БЕЗ ПРОВЕРКИ данных на валидность
-     * @param groupNumber
-     * @param studentBookNumber
-     * @param averageScore
-     * @return экземпляр класса
-     * @throws Exception
-     */
     public static Student create(String groupNumber, int studentBookNumber, double averageScore) throws Exception {
-            return new Student(groupNumber, studentBookNumber, averageScore);
+        return new Student(groupNumber, studentBookNumber, averageScore);
     }
 
-    /**
-     * Возвращает экземпляр класса С ПРОВЕРКОЙ данных на валидность (если true)
-     * @param groupNumber
-     * @param studentBookNumber
-     * @param averageScore
-     * @param needValidate
-     * @return экземпляр класса
-     * @throws Exception выбрасывается в случае, если не прошла валидация на создание объекта
-     */
     public static Student create(String groupNumber, int studentBookNumber, double averageScore, boolean needValidate) throws Exception {
         if (needValidate) {
-            if (!groupNumberValidate(groupNumber)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера автомобиля. Введено: " + groupNumber);
+            if (!groupNumberValidate(groupNumber)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера группы. Введено: " + groupNumber);
             if (!studentBookNumberValidate(studentBookNumber)) throw new IncorrectDataException("ОШИБКА! Номер зачётной книжки не может быть отрицательным. Введено: " + studentBookNumber);
             if (!averageScoreValidate(averageScore)) throw new IncorrectDataException("ОШИБКА! Средний балл не может быть отрицательным. Введено: " + averageScore);
             return new Student(groupNumber, studentBookNumber, averageScore);
@@ -122,8 +106,7 @@ public class Student implements InterfaceCompare<Student> {
         return "EntityClass.Student:" +
                 " " + groupNumber +
                 ", '" + studentBookNumber +
-                "', " + averageScore
-                ;
+                "', " + averageScore;
     }
 
     @Override
@@ -131,13 +114,10 @@ public class Student implements InterfaceCompare<Student> {
         switch (compareBy) {
             case "groupNumber":
                 return PureComparator.compareString(this.getGroupNumber(), o2.getGroupNumber());
-//                return this.getGroupNumber().compareToIgnoreCase(o2.getGroupNumber());
             case "studentBookNumber":
                 return PureComparator.compareInteger(this.getStudentBookNumber(), o2.getStudentBookNumber());
-//                return Integer.compare(this.getStudentBookNumber(), o2.getStudentBookNumber());
             case "averageScore":
                 return PureComparator.compareDouble(this.getAverageScore(), o2.getAverageScore());
-//                return Double.compare(this.getAverageScore(), o2.getAverageScore());
             default:
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
@@ -156,4 +136,18 @@ public class Student implements InterfaceCompare<Student> {
         return studentBookNumber;
     }
 
+
+    @Override
+    public Object extractValue(Student object, String field) {
+        switch (field) {
+            case "groupNumber":
+                return object.getGroupNumber();
+            case "studentBookNumber":
+                return object.getStudentBookNumber();
+            case "averageScore":
+                return object.getAverageScore();
+            default:
+                throw new IllegalArgumentException("Неизвестное поле: " + field);
+        }
+    }
 }
