@@ -1,22 +1,17 @@
 [
   {
-    "gosNumber": "gn111111",
-    "model": "model1111",
-    "odometer": "11111"
+    "gosNumber": "1111 AA-1",
+    "model": "Model1",
+    "odometer": "100000"
   },
   {
-    "gosNumber": "gn22222",
-    "model": "model22222",
-    "odometer": "222222"
+    "gosNumber": "2222 BB-2",
+    "model": "Model2",
+    "odometer": "100"
   },
   {
-    "gosNumber": "gn333333",
-    "model": "model33333",
-    "odometer": "333333"
-  },
-  {
-    "gosNumber": "gn444444",
-    "model": "model444444",
-    "odometer": "444444444"
+    "gosNumber": "3333 CC-3",
+    "model": "Model3",
+    "odometer": "0"
   }
 ]
