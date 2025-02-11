@@ -4,8 +4,6 @@ package comparators;
  * Класс реализует собственную локгику сравнения, не используя встроенные механизмы Java. Поддерживаемые типы: String и Integer
  * @author Виктор Карпов
  */
-
-
 public class PureComparator {
 
     /**

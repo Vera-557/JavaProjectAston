@@ -1,4 +1,5 @@
 package entityclass;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import comparators.InterfaceCompare;
 import comparators.PureComparator;
 
@@ -20,7 +21,8 @@ public class Student implements InterfaceCompare<Student> {
         studentBookNumber
     }
 
-    private Student(String groupNumber, int studentBookNumber, double averageScore) {
+//    private Student(String groupNumber, int studentBookNumber, double averageScore) {
+        private Student(@JsonProperty("groupNumber") String groupNumber, @JsonProperty("studentBookNumber") int studentBookNumber, @JsonProperty("averageScore") double averageScore) {
         this.groupNumber = groupNumber;
         this.averageScore = averageScore;
         this.studentBookNumber = studentBookNumber;

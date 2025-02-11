@@ -1,5 +1,6 @@
 package entityclass;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import comparators.InterfaceCompare;
 import comparators.PureComparator;
 
@@ -22,7 +23,8 @@ public class Bus implements InterfaceCompare<Bus> {
         odometer
     }
 
-    private Bus(String gosNumber, String model, int odometer) {
+//    private Bus(String gosNumber, String model, int odometer) {
+    private Bus(@JsonProperty("gosNumber") String gosNumber, @JsonProperty("model") String model, @JsonProperty("odometer") int odometer) {
         this.gosNumber = gosNumber;
         this.model = model;
         this.odometer = odometer;
