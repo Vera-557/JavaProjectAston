@@ -7,28 +7,20 @@ import java.util.Scanner;
 public class TypeSelector {
     public static EntityType entityTypeInput() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Выбрать тип данных для обработки. Доступные данные:" + "\n" + EntityType.BUS.name() + "\n" + EntityType.STUDENT.name() + "\n" + EntityType.USER.name());
 
-        try {
-            EntityType inputType = EntityType.valueOf(scanner.nextLine().toUpperCase());
+        while (true) {
+            System.out.println("Выбрать тип данных для обработки. Доступные данные:" + "\n" + EntityType.BUS.name() + "\n" + EntityType.STUDENT.name() + "\n" + EntityType.USER.name() + "\n" + "Команда для выхода: " + Command.EXIT);
+            String input = scanner.nextLine().toUpperCase();
 
-            switch (inputType) {
-                case BUS -> {
-                    return EntityType.BUS;
-                }
-                case USER -> {
-                    return EntityType.USER;
-                }
-                case STUDENT -> {
-                    return EntityType.STUDENT;
-                }
-                default -> {
-                    throw new IllegalArgumentException("Что-то пошло не так при вводе данных, попробуйте еще раз");
-                }
+            if (input.equals(Command.EXIT.name())) {
+                return null;
             }
 
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Неправильно введены данные, попробуйте еще раз: " + e.getMessage());
+            try {
+                return EntityType.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: неправильный ввод. Попробуйте еще раз. " + e.getMessage());
+            }
         }
     }
 }
