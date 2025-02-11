@@ -1,7 +1,5 @@
 package comparators;
 
-import comparators.PureComparator;
-
 import java.util.Comparator;
 
 /**
