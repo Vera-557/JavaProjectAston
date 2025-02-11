@@ -1,9 +1,6 @@
 package loader;
 
-import entityclass.Bus;
-import entityclass.Student;
-import entityclass.EntityType;
-import entityclass.User;
+import entityclass.*;
 import comparators.InterfaceCompare;
 
 import java.util.*;
@@ -18,68 +15,72 @@ public class RandomDataLoader<T extends InterfaceCompare<T>> implements DataLoad
     }
 
     @Override
-    public List<T> loadData() {
+    public EntityList<T> loadData() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите количество требуемых случайных объектов: ");
         int count = Integer.parseInt(scanner.nextLine());
         //TODO заменить list на EntityList
         List<T> list = new ArrayList<>(count);
         switch (type) {
-            case BUS ->
-                busFill((List<Bus>) list, count);
-
-            case USER ->
-                userFill((List<User>) list, count);
-
-            case STUDENT ->
-                studentFill((List<Student>) list, count);
-
+            case BUS -> {
+                return (EntityList<T>) new EntityList<>(busFill(count));
+            }
+            case USER -> {
+                return (EntityList<T>) new EntityList<>(userFill(count));
+            }
+            case STUDENT -> {
+                return (EntityList<T>) new EntityList<>(studentFill(count));
+            }
             case null, default -> System.out.println("Неизвестный тип данных, попробуйте еще раз");
         }
-
-        return Collections.unmodifiableList(list);
+        throw new IllegalArgumentException("Неизвестный тип данных, попробуйте еще раз");
     }
 
-    private void busFill(List<Bus> list, int count) {
+    private Bus[] busFill(int count) {
+        Bus[] buses = new Bus[count];
         for (int i = 0; i < count; i++) {
             String busNumber = createRandomBusNumber(getRandomIntegerAsString(4), getRandomString(2), getRandomInteger(1, 7));
             String model = getRandomString(random.nextInt(10) + 1);
             int odometr = getRandomInteger(random.nextInt(5) + 1);
             try {
-                list.add(Bus.create(busNumber, model, odometr, true));
+                buses[i] = Bus.create(busNumber, model, odometr, true);
             } catch (Exception e) {
                 throw new RuntimeException("Ошибка при создании случайного автобуса, попробуйте еще раз: " + e.getMessage());
             }
-
         }
+        return buses;
     }
 
-    private void userFill(List<User> list, int count) {
+    private User[] userFill(int count) {
+        User[] users = new User[count];
         for (int i = 0; i < count; i++) {
             String name = getRandomString(5);
             String email = createEmail(getRandomString(5), getRandomString(4), getRandomString(2));
             String password = getRandomString(5) + getRandomInteger(5);
 
             try {
-                list.add(User.create(name, email, password, true));
+                users[i] = User.create(name, email, password, true);
             } catch (Exception e) {
                 throw new RuntimeException("Ошибка при создании случайного юзера, попробуйте еще раз: " + e.getMessage());
             }
         }
+        return users;
     }
 
-    private void studentFill(List<Student> list, int count) {
+    private Student[] studentFill(int count) {
+        Student[] students = new Student[count];
         for (int i = 0; i < count; i++) {
             String groupNumber = getRandomString(2) + getRandomInteger(5);
             double averageScore = random.nextDouble() * 10;
             int studentBookNumber = getRandomInteger(5);
 
             try {
-                list.add(Student.create(groupNumber, studentBookNumber, averageScore, true));
+                students[i] = Student.create(groupNumber, studentBookNumber, averageScore, true);
             } catch (Exception e) {
                 throw new RuntimeException("Ошибка при создании случайного студента, попробуйте еще раз: " + e.getMessage());
             }
         }
+        return students;
     }
 
     private int getRandomInteger(final int length) {

@@ -1,9 +1,6 @@
 package loader;
 
-import entityclass.Bus;
-import entityclass.Student;
-import entityclass.EntityType;
-import entityclass.User;
+import entityclass.*;
 import comparators.InterfaceCompare;
 
 import java.util.ArrayList;
@@ -19,34 +16,30 @@ public class ManualDataLoader<T extends InterfaceCompare> implements DataLoadStr
     }
 
     @Override
-    public List<T> loadData() {
+    public EntityList<T> loadData() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Введите количество элементов: ");
         int count = scanner.nextInt();
         scanner.nextLine();
-        //TODO заменить list на EntityList
-        List<T> list = new ArrayList<>(count);
+
         switch (type) {
             case BUS -> {
-                busFill((List<Bus>) list, count, scanner);
-                break;
+                return (EntityList<T>) new EntityList<>(busFill(count, scanner));
             }
             case USER -> {
-                userFill((List<User>) list, count, scanner);
-                break;
+                return (EntityList<T>) new EntityList<>(userFill(count, scanner));
             }
             case STUDENT -> {
-                studentFill((List<Student>) list, count, scanner);
-                break;
+                return (EntityList<T>) new EntityList<>(studentFill(count, scanner));
             }
             case null, default -> System.out.println("Неизвестный тип данных, попробуйте еще раз");
         }
-
-        return Collections.unmodifiableList(list);
+        throw new IllegalArgumentException("Неизвестный тип данных, попробуйте еще раз");
     }
 
-    private void busFill(final List<Bus> list, final int count, final Scanner scanner) {
+    private Bus[] busFill(final int count, final Scanner scanner) {
+        Bus[] buses = new Bus[count];
         for (int i = 0; i < count; i++) {
             System.out.println("Введите номер автобуса (строка): ");
             String number = scanner.nextLine();
@@ -58,15 +51,17 @@ public class ManualDataLoader<T extends InterfaceCompare> implements DataLoadStr
             int odometr = Integer.parseInt(scanner.nextLine());
 
             try {
-                list.add(Bus.create(number, model, odometr, true));
+                buses[i] = (Bus.create(number, model, odometr, true));
             } catch (Exception e) {
                 System.out.println("Ошибка при создании автобуса вручную, попробуйте еще раз: " + e.getMessage());
                 i--;
             }
         }
+        return buses;
     }
 
-    private void userFill(List<User> list, int count, Scanner scanner) {
+    private User[] userFill(int count, Scanner scanner) {
+        User[] users = new User[count];
         for (int i = 0; i < count; i++) {
             System.out.println("Введите имя (строка): ");
             String name = scanner.nextLine();
@@ -78,15 +73,17 @@ public class ManualDataLoader<T extends InterfaceCompare> implements DataLoadStr
             String password = scanner.nextLine();
 
             try {
-                list.add(User.create(name, email, password, true));
+                users[i] = User.create(name, email, password, true);
             } catch (Exception e) {
                 System.out.println("Ошибка при создании пользователя, попробуйте еще раз: " + e.getMessage());
                 i--;
             }
         }
+        return users;
     }
 
-    private void studentFill(List<Student> list, int count, Scanner scanner) {
+    private Student[] studentFill(int count, Scanner scanner) {
+        Student[] students = new Student[count];
         for (int i = 0; i < count; i++) {
             System.out.println("Введите номер гуппы (строка): ");
             String groupNumber = scanner.nextLine();
@@ -98,11 +95,12 @@ public class ManualDataLoader<T extends InterfaceCompare> implements DataLoadStr
             int bookNumber = Integer.parseInt(scanner.nextLine());
 
             try {
-                list.add(Student.create(groupNumber, bookNumber, avg, true));
+                students[i] = Student.create(groupNumber, bookNumber, avg, true);
             } catch (Exception e) {
                 System.out.println("Ошибка при создании студента, попробуйте еще раз: " + e.getMessage());
                 i--;
             }
         }
+        return students;
     }
 }

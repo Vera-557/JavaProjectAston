@@ -1,44 +1,58 @@
 package loader;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import entityclass.Bus;
-import entityclass.Student;
-import entityclass.User;
+import comparators.InterfaceCompare;
+import entityclass.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class JsonDataLoader<T> implements DataLoadStrategy<T> {
+public class JsonDataLoader<T extends InterfaceCompare> implements DataLoadStrategy<T> {
     private final ObjectMapper objectMapper;
-    private final Class<T> typeClass;
+    private final EntityType type;
 
-    public JsonDataLoader(final Class<T> typeClass) {
+    public JsonDataLoader(final EntityType type) {
         objectMapper = new ObjectMapper();
-        this.typeClass = typeClass;
+        this.type = type;
     }
 
     //класс отвечает за загрузку json-файла
     @Override
-    public List<T> loadData() {
+    public EntityList<T> loadData() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите путь к json-файлу: ");
         String filePath = scanner.nextLine();
-        //TODO заменить List.class на Entity.class
         try {
-            List<T> list = objectMapper.readValue(new File(filePath), objectMapper.getTypeFactory().constructCollectionType(List.class, typeClass)); //здесь происходит чтение пути файла и наполнение массива List данными из файла
-
-            validateList(list);
-
-            return list;
+            switch (type) {
+                case BUS -> {
+                    Bus[] buses = objectMapper.readValue(new File(filePath), Bus[].class);
+                    EntityList<T> entityList = (EntityList<T>) new EntityList<>(buses);
+                    validateList(entityList);
+                    return entityList;
+                }
+                case STUDENT -> {
+                    Student[] students = objectMapper.readValue(new File(filePath), Student[].class);
+                    EntityList<T> entityList = (EntityList<T>) new EntityList<>(students);
+                    validateList(entityList);
+                    return entityList;
+                }
+                case USER -> {
+                    User[] users = objectMapper.readValue(new File(filePath), User[].class);
+                    EntityList<T> entityList = (EntityList<T>) new EntityList<>(users);
+                    validateList(entityList);
+                    return entityList;
+                }
+                case null, default -> {throw new IllegalArgumentException("Неизвестный тип данных");}
+            }
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при чтении JSON: " + e.getMessage());
         }
     }
 
-    private void validateList(final List<T> list) {
-        for (Object obj : list) {
+    private void validateList(final EntityList<T> list) {
+        for (Object obj : list.getArray()) {
             if (!isValid(obj)) {
                 throw new IllegalArgumentException("Обнаружены невалидные данные в JSON-файле");
             }

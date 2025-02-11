@@ -1,8 +1,11 @@
 package loader;
 
+import comparators.InterfaceCompare;
+import entityclass.EntityList;
+
 import java.util.List;
 
-public class DataLoaderContext<T> {
+public class DataLoaderContext<T extends InterfaceCompare> {
     private DataLoadStrategy<T> dataLoadStrategy;
 
     public DataLoaderContext(final DataLoadStrategy<T> dataLoadStrategy) {
@@ -15,7 +18,7 @@ public class DataLoaderContext<T> {
         }
     }
 
-    public List<T> processStrategy() {
+    public EntityList<T> processStrategy() {
         if (dataLoadStrategy == null) {
             throw new IllegalStateException("Стратегия не может быть null");
         }

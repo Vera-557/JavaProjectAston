@@ -76,11 +76,9 @@ public class Main {
                 break;
             }
 
-            Class<? extends InterfaceCompare<?>> entityClass = entityType.getTypeClass();
-
             DataLoadStrategy<?> strategy;
             switch (strategyType) {
-                case JSON -> strategy = new JsonDataLoader<>(entityClass);
+                case JSON -> strategy = new JsonDataLoader<>(entityType);
                 case MANUAL -> strategy = new ManualDataLoader<>(entityType);
                 case RANDOM -> strategy = new RandomDataLoader<>(entityType);
                 default -> throw new IllegalStateException("Некорректная стратегия: " + strategyType);
@@ -88,8 +86,9 @@ public class Main {
 
             DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
 
-            List<?> data = context.processStrategy();
-            data.forEach(System.out::println);
+            EntityList<?> data = context.processStrategy();
+            //data.print();
+            System.out.println("*****");
         }
     }
 }
