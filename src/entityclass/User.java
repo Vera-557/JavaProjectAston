@@ -46,7 +46,6 @@ public class User implements InterfaceCompare<User> {
         return str.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
-
     /**
      * Валидация правильности ввода пароля
      * @param str
@@ -113,13 +112,31 @@ public class User implements InterfaceCompare<User> {
         this.password = password;
     }
 
+    /**
+     * Извлекает значение указанного поля из объекта User.
+     * @param user объект User
+     * @param field имя поля
+     * @return значение поля
+     */
+    public Object extractValue(User user, String field) {
+        switch (field) {
+            case "name":
+                return user.getName();
+            case "email":
+                return user.getEmail();
+            case "password":
+                return user.getPassword();
+            default:
+                throw new IllegalArgumentException("Неверное поле: " + field);
+        }
+    }
+
     @Override
     public String toString() {
         return "EntityClass.User:" +
                 " " + name +
                 ", '" + email +
-                "', " + password
-                ;
+                "', " + password;
     }
 
     @Override
@@ -127,13 +144,10 @@ public class User implements InterfaceCompare<User> {
         switch (compareBy) {
             case "name":
                 return PureComparator.compareString(this.getName(), o2.getName());
-//                return this.getName().compareToIgnoreCase(o2.getName());
             case "email":
                 return PureComparator.compareString(this.getEmail(), o2.getEmail());
-//                return this.getEmail().compareToIgnoreCase(o2.getEmail());
             case "password":
                 return PureComparator.compareString(this.getPassword(), o2.getPassword());
-//                return this.getPassword().compareTo(o2.getPassword());
             default:
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
