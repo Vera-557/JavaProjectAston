@@ -1,10 +1,15 @@
-package EntityClass;
+package entityclass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import comparators.InterfaceCompare;
+import comparators.PureComparator;
 
+/**
+ * Описывает класс User
+ * @author Виктор Карпов
+ */
 public class User implements InterfaceCompare<User> {
-//    public class EntityClass.User implements Comparable<EntityClass.User> {
+
     private String name;
     private String email;
     private String password;
@@ -18,7 +23,8 @@ public class User implements InterfaceCompare<User> {
         password
     }
 
-    private User(@JsonProperty("name") String name, @JsonProperty("email") String email, @JsonProperty("password") String password) {
+//    private User(String name, String email, String password) {
+        private User(@JsonProperty("name") String name, @JsonProperty("email") String email, @JsonProperty("password") String password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -42,7 +48,6 @@ public class User implements InterfaceCompare<User> {
         return str.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
-
     /**
      * Валидация правильности ввода пароля
      * @param str
@@ -53,6 +58,7 @@ public class User implements InterfaceCompare<User> {
         //return str.matches("^[a-zA-Z]+$");
     }
 
+    @Deprecated
     /**
      * Возвращает экземпляр класса БЕЗ ПРОВЕРКИ данных на валидность
      * @param name
@@ -70,8 +76,8 @@ public class User implements InterfaceCompare<User> {
      * @param email
      * @param password
      * @param needValidate
-     * @return
-     * @throws Exception
+     * @return экземпляр класса
+     * @throws Exception выбрасывается в случае, если не прошла валидация на создание объекта
      */
     public static User create(String name, String email, String password, boolean needValidate) throws Exception {
         if (needValidate) {
@@ -108,28 +114,57 @@ public class User implements InterfaceCompare<User> {
         this.password = password;
     }
 
+    /**
+     * Извлекает значение указанного поля из объекта User.
+     * @param user объект User
+     * @param field имя поля
+     * @return значение поля
+     */
+    public Object extractValue(User user, String field) {
+        switch (field) {
+            case "name":
+                return user.getName();
+            case "email":
+                return user.getEmail();
+            case "password":
+                return user.getPassword();
+            default:
+                throw new IllegalArgumentException("Неверное поле: " + field);
+        }
+    }
+
     @Override
     public String toString() {
         return "EntityClass.User:" +
                 " " + name +
                 ", '" + email +
-                "', " + password
-                ;
+                "', " + password;
     }
 
     @Override
     public int compareTo(User o2, String compareBy) {
         switch (compareBy) {
             case "name":
-                return this.getName().compareToIgnoreCase(o2.getName());
+                return PureComparator.compareString(this.getName(), o2.getName());
             case "email":
-                return this.getEmail().compareToIgnoreCase(o2.getEmail());
+                return PureComparator.compareString(this.getEmail(), o2.getEmail());
             case "password":
-                return this.getPassword().compareTo(o2.getPassword());
+                return PureComparator.compareString(this.getPassword(), o2.getPassword());
             default:
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return email.equals(user.email);
+    }
 
+    @Override
+    public int hashCode() {
+        return email.hashCode();
+    }
 }

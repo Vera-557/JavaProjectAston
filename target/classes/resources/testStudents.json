@@ -1,0 +1,22 @@
+[
+  {
+    "groupNumber": "Group1",
+    "averageScore": "1.1",
+    "studentBookNumber": "111"
+  },
+  {
+    "groupNumber": "Group2",
+    "averageScore": "2.2",
+    "studentBookNumber": "222"
+  },
+  {
+    "groupNumber": "Group3",
+    "averageScore": "3.3",
+    "studentBookNumber": "333"
+  },
+  {
+    "groupNumber": "Group4",
+    "averageScore": "4.4",
+    "studentBookNumber": "444"
+  }
+]

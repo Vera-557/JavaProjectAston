@@ -8,7 +8,15 @@ import comparators.Sortable;
  * @param <T>
  */
 public class EntityList<T extends InterfaceCompare> implements Sortable<T> {
-    T[] array;
+    private T[] array;
+
+    public T[] getArray() {
+        return array;
+    }
+
+    public void setArray(T[] array) {
+        this.array = array;
+    }
 
     /**
      * принимает в себя массив, содержащий клсс, который может имплементировать InterfaceCompare
@@ -57,6 +65,4 @@ public class EntityList<T extends InterfaceCompare> implements Sortable<T> {
             array[i] = temp;
         }
     }
-
-
 }

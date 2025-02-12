@@ -2,8 +2,14 @@ package entityclass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import comparators.InterfaceCompare;
+import comparators.PureComparator;
+import search.ValueExtractor;
 
-public class Bus implements InterfaceCompare<Bus> {
+/**
+ * Описывает класс Bus
+ * @author Виктор Карпов
+ */
+public class Bus implements InterfaceCompare<Bus>, ValueExtractor<Bus, Object> {
     private String gosNumber;
     private String model;
     private int odometer;
@@ -17,6 +23,7 @@ public class Bus implements InterfaceCompare<Bus> {
         odometer
     }
 
+//    private Bus(String gosNumber, String model, int odometer) {
     private Bus(@JsonProperty("gosNumber") String gosNumber, @JsonProperty("model") String model, @JsonProperty("odometer") int odometer) {
         this.gosNumber = gosNumber;
         this.model = model;
@@ -39,37 +46,16 @@ public class Bus implements InterfaceCompare<Bus> {
         }
     }
 
-    /**
-     * Возвращает экземпляр класса БЕЗ ПРОВЕРКИ данных на валидность
-     *
-     * @param gosNumber
-     * @param model
-     * @param odometer
-     * @return
-     */
+    @Deprecated
     public static Bus create(String gosNumber, String model, int odometer) {
         return new Bus(gosNumber, model, odometer);
     }
 
-
-    /**
-     * Возвращает экземпляр класса С ПРОВЕРКОЙ данных на валидность (если true)
-     *
-     * @param gosNumber
-     * @param model
-     * @param odometer
-     * @param needValidate
-     * @return
-     * @throws Exception
-     */
     public static Bus create(String gosNumber, String model, int odometer, boolean needValidate) throws Exception {
         if (needValidate) {
-            if (!gosNumberValidate(gosNumber))
-                throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера автомобиля. Введено: " + gosNumber);
-            if (!modelValidate(model))
-                throw new IncorrectDataException("ОШИБКА! Некорректный ввод модели. Разрешаются только цифры и буквы Введено: " + model);
-            if (!odometerValidate(odometer))
-                throw new IncorrectDataException("ОШИБКА! Значение одометра не может быть отрицательным. Введено: " + odometer);
+            if (!gosNumberValidate(gosNumber)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод номера автомобиля. Введено: " + gosNumber);
+            if (!modelValidate(model)) throw new IncorrectDataException("ОШИБКА! Некорректный ввод модели. Разрешаются только цифры и буквы Введено: " + model);
+            if (!odometerValidate(odometer)) throw new IncorrectDataException("ОШИБКА! Значение одометра не может быть отрицательным. Введено: " + odometer);
             return new Bus(gosNumber, model, odometer);
         } else {
             return new Bus(gosNumber, model, odometer);
@@ -111,24 +97,48 @@ public class Bus implements InterfaceCompare<Bus> {
         return "EntityClass.Bus:" +
                 " " + gosNumber +
                 ", '" + model +
-                "', " + odometer
-                ;
+                "', " + odometer;
     }
-
 
     @Override
     public int compareTo(Bus o2, String compareBy) {
         switch (compareBy) {
             case "gosNumber":
-                return this.getGosNumber().compareToIgnoreCase(o2.getGosNumber());
+                return PureComparator.compareString(this.getGosNumber(), o2.getGosNumber());
             case "model":
-                return this.getModel().compareToIgnoreCase(o2.getModel());
+                return PureComparator.compareString(this.getModel(), o2.getModel());
             case "odometer":
-                return Integer.compare(this.getOdometer(), o2.getOdometer());
+                return PureComparator.compareInteger(this.getOdometer(), o2.getOdometer());
             default:
                 throw new IllegalArgumentException("Неверное поле сортировки: " + compareBy);
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bus bus = (Bus) o;
+        return gosNumber.equals(bus.gosNumber);
+    }
 
+    @Override
+    public int hashCode() {
+        return gosNumber.hashCode();
+    }
+
+
+    @Override
+    public Object extractValue(Bus object, String field) {
+        switch (field) {
+            case "gosNumber":
+                return object.getGosNumber();
+            case "model":
+                return object.getModel();
+            case "odometer":
+                return object.getOdometer();
+            default:
+                throw new IllegalArgumentException("Неизвестное поле: " + field);
+        }
+    }
 }

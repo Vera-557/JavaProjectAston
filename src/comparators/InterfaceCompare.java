@@ -3,10 +3,10 @@ package comparators;
 /**
  * Сравнивает объект с другим объектом, правило сравнения передается в сигнатуру метода.
  * @param <T>
+ * @author Виктор Карпов
  */
 public interface InterfaceCompare<T> {
     /**
-     *
      * @param o2 - сравниваемое значение
      * @param compareBy
      * @return

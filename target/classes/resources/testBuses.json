@@ -1,0 +1,17 @@
+[
+  {
+    "gosNumber": "1111 AA-1",
+    "model": "Model1",
+    "odometer": "100000"
+  },
+  {
+    "gosNumber": "2222 BB-2",
+    "model": "Model2",
+    "odometer": "100"
+  },
+  {
+    "gosNumber": "3333 CC-3",
+    "model": "Model3",
+    "odometer": "0"
+  }
+]
