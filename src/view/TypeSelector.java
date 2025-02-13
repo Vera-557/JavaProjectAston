@@ -16,8 +16,10 @@ public class TypeSelector {
                     + "\t" + Command.EXIT.getNumber() + ". " + Command.EXIT.name().toLowerCase() + Command.EXIT.getDescription());
             String input = scanner.nextLine().toUpperCase();
 
-            if (input.substring(0, 1).equals(Command.EXIT.getNumber())) {
-                break;
+            if (input.length() > 2){
+                if (input.substring(0, 3).equals(Command.EXIT.getNumber())) {
+                    break;
+                }
             }
 
             String number = input.substring(0, 1);
