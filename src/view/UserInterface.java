@@ -3,9 +3,10 @@ package view;
 import entityclass.EntityList;
 import entityclass.EntityType;
 import loader.*;
+import usersortmenu.MenuSort;
 
-public class SelectorController {
-    public static EntityList<?> run() {
+public class UserInterface {
+    public static void run() {
         while (true) {
             EntityType entityType = TypeSelector.entityTypeInput();
             if (entityType == null) {
@@ -32,12 +33,10 @@ public class SelectorController {
                 DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
 
                 EntityList<?> data = context.processStrategy();
-                for (Object obj : data.getArray()) {
-                    System.out.println(obj);
-                }
 
-                System.out.println("*****");
-                return data;
+                MenuSort menuSort = new MenuSort(data);
+                menuSort.showSortMenu();
+
             }
         }
         throw new RuntimeException("Не удалось создать массив данных");
