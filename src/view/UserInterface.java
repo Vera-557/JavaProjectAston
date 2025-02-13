@@ -13,30 +13,31 @@ public class UserInterface {
                 System.out.println("До скорых встреч! \uD83D\uDC8B");
                 break;
             }
-
-            StrategyType strategyType = StrategySelector.strategyTypeInput();
-            if (strategyType == null) {
-                System.out.println("До скорых встреч! \uD83D\uDC8B");
-                break;
-            }
-            if (strategyType == StrategyType.ABORT) {
-                System.out.println("Снова выбирайте тип данных");
-            } else {
-                DataLoadStrategy<?> strategy;
-                switch (strategyType) {
-                    case JSON -> strategy = new JsonDataLoader<>(entityType);
-                    case MANUAL -> strategy = new ManualDataLoader<>(entityType);
-                    case RANDOM -> strategy = new RandomDataLoader<>(entityType);
-                    default -> throw new IllegalStateException("Некорректная стратегия: " + strategyType);
+            while (true) {
+                StrategyType strategyType = StrategySelector.strategyTypeInput();
+                if (strategyType == null) {
+                    System.out.println("До скорых встреч! \uD83D\uDC8B");
+                    break;
                 }
+                if (strategyType == StrategyType.ABORT) {
+                    System.out.println("Снова выбирайте тип данных");
+                    break;
+                } else {
+                    DataLoadStrategy<?> strategy;
+                    switch (strategyType) {
+                        case JSON -> strategy = new JsonDataLoader<>(entityType);
+                        case MANUAL -> strategy = new ManualDataLoader<>(entityType);
+                        case RANDOM -> strategy = new RandomDataLoader<>(entityType);
+                        default -> throw new IllegalStateException("Некорректная стратегия: " + strategyType);
+                    }
 
-                DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
+                    DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
 
-                EntityList<?> data = context.processStrategy();
+                    EntityList<?> data = context.processStrategy();
 
-                MenuSort menuSort = new MenuSort(data);
-                menuSort.showSortMenu();
-
+                    MenuSort menuSort = new MenuSort(data);
+                    menuSort.showSortMenu();
+                }
             }
         }
         throw new RuntimeException("Не удалось создать массив данных");
