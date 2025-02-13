@@ -19,7 +19,6 @@ public class RandomDataLoader<T extends InterfaceCompare<T>> implements DataLoad
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите количество требуемых случайных объектов: ");
         int count = Integer.parseInt(scanner.nextLine());
-        //TODO заменить list на EntityList
         List<T> list = new ArrayList<>(count);
         switch (type) {
             case BUS -> {

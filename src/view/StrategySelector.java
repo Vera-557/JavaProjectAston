@@ -7,7 +7,11 @@ public class StrategySelector {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Выберите источник данных: Доступные источники:" + "\n" + StrategyType.JSON.name() + "\n" + StrategyType.MANUAL.name() + "\n" + StrategyType.RANDOM.name() + "\n" + "Команда для выхода: " + Command.EXIT);
+            System.out.println("Выберите источник данных: Доступные источники:" + "\n"
+                    + StrategyType.JSON.name() + "\n"
+                    + StrategyType.MANUAL.name() + "\n"
+                    + StrategyType.RANDOM.name() + "\n"
+                    + "Команды: " + Command.EXIT + " - для выхода; " + Command.ABORT + " - для возврата назад.");
             String input = scanner.nextLine().toUpperCase();
 
             if (input.equals(Command.EXIT.name())) {
