@@ -36,3 +36,5 @@
   
    - 5.2. Запись результатов в файл
      - Реализовать функционал для записи отсортированных коллекций и найденных значений в файл в режиме добавления.
+    
+   https://docs.google.com/spreadsheets/d/1-8gGvQ5ePqS4pIrW1f78mQrKc-d1RqxofeCSPTKy-nk/edit?gid=0#gid=0
