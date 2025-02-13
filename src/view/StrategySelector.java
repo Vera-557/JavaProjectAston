@@ -15,13 +15,14 @@ public class StrategySelector {
                     + "\t" + Command.EXIT.getNumber() + ". " + Command.EXIT.name().toLowerCase() + Command.EXIT.getDescription());
             String input = scanner.nextLine().toUpperCase();
 
-            if (input.substring(0, 1).equals(Command.EXIT.getNumber())) {
-                return null;
+            if (input.substring(0, 1).equals(Command.ABORT.getNumber())) {
+                return StrategyType.ABORT;
             }
 
-            if (input.length() > 1) {
-                if (input.substring(0, 3).equals(Command.ABORT.getNumber())) {
-                    return StrategyType.ABORT;
+            if (input.length() > 2) {
+                if (input.substring(0, 3).equals(Command.EXIT.getNumber())) {
+                    return null;
+
                 }
             }
 

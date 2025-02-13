@@ -1,7 +1,7 @@
 package view;
 
 public enum Command {
-    ABORT("999", " - команда для возврата на предыдущий шаг"), EXIT("0", " - команда для выхода из программы");
+    ABORT("0", " - команда для возврата на предыдущий шаг"), EXIT("999", " - команда для выхода из программы");
 
     private final String number;
     private final String description;
