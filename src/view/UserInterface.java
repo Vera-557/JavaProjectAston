@@ -4,6 +4,7 @@ import entityclass.EntityList;
 import entityclass.EntityType;
 import loader.*;
 import usersortmenu.MenuSort;
+import userwritetofilemenu.MenuWriteToFile;
 
 public class UserInterface {
     public static void run() {
@@ -38,9 +39,11 @@ public class UserInterface {
                         if (data == null) {
                             break;
                         }
-
                         MenuSort menuSort = new MenuSort(data);
                         menuSort.showSortMenu();
+
+                        MenuWriteToFile menuWriteToFile = new MenuWriteToFile(data);
+                        menuWriteToFile.showWriteToFileMenu();
                     }
                 }
             }
