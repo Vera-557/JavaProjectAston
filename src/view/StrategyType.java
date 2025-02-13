@@ -1,5 +1,5 @@
 package view;
 
 public enum StrategyType {
-    JSON, MANUAL, RANDOM
+    JSON, MANUAL, RANDOM, ABORT
 }

@@ -1,5 +1,5 @@
 package view;
 
 public enum Command {
-    EXIT
+    ABORT, EXIT
 }
