@@ -2,6 +2,7 @@ package loader;
 
 import entityclass.*;
 import comparators.InterfaceCompare;
+import view.Command;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,9 +20,25 @@ public class ManualDataLoader<T extends InterfaceCompare> implements DataLoadStr
     public EntityList<T> loadData() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите количество элементов: ");
-        int count = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Введите количество элементов. Также доступны команды: " + "\n"
+                + "\t" + Command.ABORT.getNumber() + ". " + Command.ABORT.name().toLowerCase() + "\n"
+                + "\t" + Command.EXIT.getNumber() + ". " + Command.EXIT.name().toLowerCase() + Command.EXIT.getDescription());
+        String filePath = scanner.nextLine();
+
+        if (UtilLoader.isAbort(filePath)) {
+            return null;
+        }
+        if (UtilLoader.isExit(filePath)) {
+            System.exit(0);
+        }
+        int count = -1;
+
+        try {
+            count = Integer.parseInt(filePath);
+        } catch (NumberFormatException e) {
+            System.out.println("Некорректное количество элементов, повторите ввод.");
+            return null;
+        }
 
         switch (type) {
             case BUS -> {

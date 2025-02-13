@@ -4,6 +4,7 @@ import entityclass.EntityList;
 import entityclass.EntityType;
 import loader.*;
 import usersortmenu.MenuSort;
+import userwritetofilemenu.MenuWriteToFile;
 
 public class UserInterface {
     public static void run() {
@@ -13,32 +14,39 @@ public class UserInterface {
                 System.out.println("До скорых встреч! \uD83D\uDC8B");
                 break;
             }
-
-            StrategyType strategyType = StrategySelector.strategyTypeInput();
-            if (strategyType == null) {
-                System.out.println("До скорых встреч! \uD83D\uDC8B");
-                break;
-            }
-            if (strategyType == StrategyType.ABORT) {
-                System.out.println("Снова выбирайте тип данных");
-            } else {
-                DataLoadStrategy<?> strategy;
-                switch (strategyType) {
-                    case JSON -> strategy = new JsonDataLoader<>(entityType);
-                    case MANUAL -> strategy = new ManualDataLoader<>(entityType);
-                    case RANDOM -> strategy = new RandomDataLoader<>(entityType);
-                    default -> throw new IllegalStateException("Некорректная стратегия: " + strategyType);
+            while (true) {
+                StrategyType strategyType = StrategySelector.strategyTypeInput();
+                if (strategyType == null) {
+                    System.out.println("До скорых встреч! \uD83D\uDC8B");
+                    System.exit(0);
                 }
+                if (strategyType == StrategyType.ABORT) {
+                    System.out.println("Снова выбирайте тип данных");
+                    break;
+                } else {
+                    while (true) {
+                        DataLoadStrategy<?> strategy;
+                        switch (strategyType) {
+                            case JSON -> strategy = new JsonDataLoader<>(entityType);
+                            case MANUAL -> strategy = new ManualDataLoader<>(entityType);
+                            case RANDOM -> strategy = new RandomDataLoader<>(entityType);
+                            default -> throw new IllegalStateException("Некорректная стратегия: " + strategyType);
+                        }
 
-                DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
+                        DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
 
-                EntityList<?> data = context.processStrategy();
+                        EntityList<?> data = context.processStrategy();
+                        if (data == null) {
+                            break;
+                        }
+                        MenuSort menuSort = new MenuSort(data);
+                        menuSort.showSortMenu();
 
-                MenuSort menuSort = new MenuSort(data);
-                menuSort.showSortMenu();
-
+                        MenuWriteToFile menuWriteToFile = new MenuWriteToFile(data);
+                        menuWriteToFile.showWriteToFileMenu();
+                    }
+                }
             }
         }
-        throw new RuntimeException("Не удалось создать массив данных");
     }
 }

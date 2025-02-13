@@ -9,18 +9,25 @@ public class TypeSelector {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Выбрать тип данных для обработки. Доступные данные:" + "\n" + EntityType.BUS.name() + "\n" + EntityType.STUDENT.name() + "\n" + EntityType.USER.name() + "\n" + "Команда для выхода: " + Command.EXIT);
+            System.out.println("ВЫБЕРИТЕ ТИП ДАННЫХ, ВВЕДЯ СООТВЕТСТВУЮЩУЮ ЦИФРУ:" + "\n"
+                    + "\t" + EntityType.BUS.getNumber() + ". " + EntityType.BUS.name().toLowerCase() + "\n"
+                    + "\t" + EntityType.STUDENT.getNumber() + ". " + EntityType.STUDENT.name().toLowerCase() + "\n"
+                    + "\t" + EntityType.USER.getNumber() + ". " + EntityType.USER.name().toLowerCase() + "\n"
+                    + "\t" + Command.EXIT.getNumber() + ". " + Command.EXIT.name().toLowerCase() + Command.EXIT.getDescription());
             String input = scanner.nextLine().toUpperCase();
 
-            if (input.equals(Command.EXIT.name())) {
-                return null;
+            if (input.substring(0, 1).equals(Command.EXIT.getNumber())) {
+                break;
             }
 
-            try {
-                return EntityType.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Ошибка: неправильный ввод. Попробуйте еще раз. " + e.getMessage());
+            String number = input.substring(0, 1);
+            for (EntityType type : EntityType.values()) {
+                if (type.getNumber().equals(number)) {
+                    return type;
+                }
             }
+            System.out.println("Некорректный ввод, попробуйте еще раз");
         }
+        return null;
     }
 }

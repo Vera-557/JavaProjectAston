@@ -2,6 +2,7 @@ package loader;
 
 import entityclass.*;
 import comparators.InterfaceCompare;
+import view.Command;
 
 import java.util.*;
 
@@ -17,9 +18,25 @@ public class RandomDataLoader<T extends InterfaceCompare<T>> implements DataLoad
     @Override
     public EntityList<T> loadData() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите количество требуемых случайных объектов: ");
-        int count = Integer.parseInt(scanner.nextLine());
-        List<T> list = new ArrayList<>(count);
+        System.out.println("Введите количество требуемых случайных объектов. Также доступны команды: " + "\n"
+                + "\t" + Command.ABORT.getNumber() + ". " + Command.ABORT.name().toLowerCase() + "\n"
+                + "\t" + Command.EXIT.getNumber() + ". " + Command.EXIT.name().toLowerCase() + Command.EXIT.getDescription());
+        String filePath = scanner.nextLine();
+
+        if (UtilLoader.isAbort(filePath)) {
+            return null;
+        }
+        if (UtilLoader.isExit(filePath)) {
+            System.exit(0);
+        }
+        int count = -1;
+
+        try {
+            count = Integer.parseInt(filePath);
+        } catch (NumberFormatException e) {
+            System.out.println("Некорректное количество элементов, повторите ввод.");
+            return null;
+        }
         switch (type) {
             case BUS -> {
                 return (EntityList<T>) new EntityList<>(busFill(count));

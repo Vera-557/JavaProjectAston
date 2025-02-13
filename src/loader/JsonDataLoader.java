@@ -3,6 +3,8 @@ package loader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import comparators.InterfaceCompare;
 import entityclass.*;
+import view.Command;
+import view.StrategyType;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,8 +24,16 @@ public class JsonDataLoader<T extends InterfaceCompare> implements DataLoadStrat
     @Override
     public EntityList<T> loadData() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите путь к json-файлу: ");
+        System.out.println("Введите путь к json-файлу. Также доступны команды: " + "\n"
+                + "\t" + Command.ABORT.getNumber() + ". " + Command.ABORT.name().toLowerCase() + "\n"
+                + "\t" + Command.EXIT.getNumber() + ". " + Command.EXIT.name().toLowerCase() + Command.EXIT.getDescription());
         String filePath = scanner.nextLine();
+        if (UtilLoader.isAbort(filePath)) {
+            return null;
+        }
+        if (UtilLoader.isExit(filePath)) {
+            System.exit(0);
+        }
         try {
             switch (type) {
                 case BUS -> {
@@ -44,7 +54,9 @@ public class JsonDataLoader<T extends InterfaceCompare> implements DataLoadStrat
                     validateList(entityList);
                     return entityList;
                 }
-                case null, default -> {throw new IllegalArgumentException("Неизвестный тип данных");}
+                case null, default -> {
+                    throw new IllegalArgumentException("Неизвестный тип данных");
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при чтении JSON: " + e.getMessage());
