@@ -40,6 +40,6 @@ public class UserInterface {
                 }
             }
         }
-        throw new RuntimeException("Не удалось создать массив данных");
+        return;
     }
 }
