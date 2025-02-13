@@ -1,8 +1,6 @@
 package testpackage;
 
-import EntityClass.Bus;
-import EntityClass.Student;
-import EntityClass.User;
+import entityclass.*;
 
 /**
  * Класс для тестов. Возвращает массив объектов.
