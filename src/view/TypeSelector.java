@@ -10,10 +10,10 @@ public class TypeSelector {
 
         while (true) {
             System.out.println("ВЫБЕРИТЕ ТИП ДАННЫХ, ВВЕДЯ СООТВЕТСТВУЮЩУЮ ЦИФРУ:" + "\n"
-                    + EntityType.BUS.getNumber() + ". " + EntityType.BUS.name().toLowerCase() + "\n"
-                    + EntityType.STUDENT.getNumber() + ". " + EntityType.STUDENT.name().toLowerCase() + "\n"
-                    + EntityType.USER.getNumber() + ". " + EntityType.USER.name().toLowerCase() + "\n"
-                    + Command.EXIT.getNumber() + ". " + Command.EXIT.name().toLowerCase() + Command.EXIT.getDescription());
+                    + "\t" + EntityType.BUS.getNumber() + ". " + EntityType.BUS.name().toLowerCase() + "\n"
+                    + "\t" + EntityType.STUDENT.getNumber() + ". " + EntityType.STUDENT.name().toLowerCase() + "\n"
+                    + "\t" + EntityType.USER.getNumber() + ". " + EntityType.USER.name().toLowerCase() + "\n"
+                    + "\t" + Command.EXIT.getNumber() + ". " + Command.EXIT.name().toLowerCase() + Command.EXIT.getDescription());
             String input = scanner.nextLine().toUpperCase();
 
             if (input.substring(0, 1).equals(Command.EXIT.getNumber())) {

@@ -17,29 +17,33 @@ public class UserInterface {
                 StrategyType strategyType = StrategySelector.strategyTypeInput();
                 if (strategyType == null) {
                     System.out.println("До скорых встреч! \uD83D\uDC8B");
-                    break;
+                    System.exit(0);
                 }
                 if (strategyType == StrategyType.ABORT) {
                     System.out.println("Снова выбирайте тип данных");
                     break;
                 } else {
-                    DataLoadStrategy<?> strategy;
-                    switch (strategyType) {
-                        case JSON -> strategy = new JsonDataLoader<>(entityType);
-                        case MANUAL -> strategy = new ManualDataLoader<>(entityType);
-                        case RANDOM -> strategy = new RandomDataLoader<>(entityType);
-                        default -> throw new IllegalStateException("Некорректная стратегия: " + strategyType);
+                    while (true) {
+                        DataLoadStrategy<?> strategy;
+                        switch (strategyType) {
+                            case JSON -> strategy = new JsonDataLoader<>(entityType);
+                            case MANUAL -> strategy = new ManualDataLoader<>(entityType);
+                            case RANDOM -> strategy = new RandomDataLoader<>(entityType);
+                            default -> throw new IllegalStateException("Некорректная стратегия: " + strategyType);
+                        }
+
+                        DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
+
+                        EntityList<?> data = context.processStrategy();
+                        if (data == null) {
+                            break;
+                        }
+
+                        MenuSort menuSort = new MenuSort(data);
+                        menuSort.showSortMenu();
                     }
-
-                    DataLoaderContext<?> context = new DataLoaderContext<>(strategy);
-
-                    EntityList<?> data = context.processStrategy();
-
-                    MenuSort menuSort = new MenuSort(data);
-                    menuSort.showSortMenu();
                 }
             }
         }
-        return;
     }
 }
